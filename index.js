@@ -39,6 +39,10 @@ const Game = function () {
 	const player1 = new Player("Bob", "X");
 	const player2 = new Player("Charlie", "O");
 
+	// display player turn
+	const playerTurn = document.querySelector(".player-turn");
+	playerTurn.innerHTML = player1.getName() + "'s turn";
+
 	function checkGameOver() {
 		const board = gameboard.displayBoard();
 
@@ -113,13 +117,17 @@ const Game = function () {
 	}
 
 	function addMarker(positionX, positionY) {
+		const playerTurn = document.querySelector(".player-turn");
 		const board = gameboard.displayBoard();
 		const numMarkers = countMarkers();
 		var symbol;
+
 		if (numMarkers % 2 == 0) {
 			symbol = player1.getSymbol();
+			playerTurn.innerHTML = player2.getName() + "'s turn";
 		} else {
 			symbol = player2.getSymbol();
+			playerTurn.innerHTML = player1.getName() + "'s turn";
 		}
 		// not empty position
 		if (board[positionX][positionY] != "") {
@@ -143,6 +151,9 @@ const Game = function () {
 	}
 
 	function restartGame() {
+		// display player turn
+		const playerTurn = document.querySelector(".player-turn");
+		playerTurn.innerHTML = player1.getName() + "'s turn";
 		gameboard.clearBoard();
 	}
 	return { checkGameOver, addMarker, restartGame };
