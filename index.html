@@ -10,6 +10,25 @@
 	</head>
 	<body>
 		<h1>Tic Tac Toe</h1>
+		<div id="name-submission">
+			<label for="player-one-name"
+				>Player 1 name:
+				<input
+					id="player-one-name"
+					type="text"
+					name="player-one-name"
+				/>
+			</label>
+			<label for="player-two-name"
+				>Player 2 name:
+				<input
+					id="player-two-name"
+					type="text"
+					name="player-two-name"
+				/>
+			</label>
+			<button class="submit-button" type="submit">Submit names</button>
+		</div>
 		<p class="player-turn"></p>
 		<table class="table">
 			<tr>
@@ -29,9 +48,7 @@
 			</tr>
 		</table>
 		<p class="game-description"></p>
-		<div>
-			<button class="restart-button">Restart Game</button>
-		</div>
+		<button class="restart-button">Restart Game</button>
 		<script src="index.js"></script>
 	</body>
 </html>

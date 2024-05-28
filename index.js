@@ -32,16 +32,21 @@ const Player = function (name, symbol) {
 	const getSymbol = () => {
 		return this.symbol;
 	};
-	return { getName, getSymbol };
+	const updateName = (name) => {
+		this.name = name;
+	};
+	return { getName, getSymbol, updateName };
 };
 
 const Game = function () {
-	const player1 = new Player("Bob", "X");
-	const player2 = new Player("Charlie", "O");
+	const player1 = new Player("", "X");
+	const player2 = new Player("", "O");
 
 	// display player turn
 	const playerTurn = document.querySelector(".player-turn");
-	playerTurn.innerHTML = player1.getName() + "'s turn";
+	if (player1.getName() != "") {
+		playerTurn.innerHTML = player1.getName() + "'s turn";
+	}
 
 	function checkGameOver() {
 		const board = gameboard.displayBoard();
@@ -116,6 +121,11 @@ const Game = function () {
 		return count;
 	}
 
+	function addPlayerNames(playerOneName, playerTwoName) {
+		player1.updateName(playerOneName);
+		player2.updateName(playerTwoName);
+	}
+
 	function addMarker(positionX, positionY) {
 		const playerTurn = document.querySelector(".player-turn");
 		const board = gameboard.displayBoard();
@@ -124,10 +134,17 @@ const Game = function () {
 
 		if (numMarkers % 2 == 0) {
 			symbol = player1.getSymbol();
-			playerTurn.innerHTML = player2.getName() + "'s turn";
+			const playerTwoName = player2.getName();
+			console.log("p2", playerTwoName);
+			if (playerTwoName != "") {
+				playerTurn.innerHTML = player2.getName() + "'s turn";
+			}
 		} else {
 			symbol = player2.getSymbol();
-			playerTurn.innerHTML = player1.getName() + "'s turn";
+			const playerOneName = player1.getName();
+			if (playerOneName != "") {
+				playerTurn.innerHTML = player1.getName() + "'s turn";
+			}
 		}
 		// not empty position
 		if (board[positionX][positionY] != "") {
@@ -153,10 +170,12 @@ const Game = function () {
 	function restartGame() {
 		// display player turn
 		const playerTurn = document.querySelector(".player-turn");
-		playerTurn.innerHTML = player1.getName() + "'s turn";
+		if (player1.getName() != "") {
+			playerTurn.innerHTML = player1.getName() + "'s turn";
+		}
 		gameboard.clearBoard();
 	}
-	return { checkGameOver, addMarker, restartGame };
+	return { checkGameOver, addMarker, restartGame, addPlayerNames };
 };
 
 const displayController = (function () {
@@ -232,7 +251,18 @@ const displayController = (function () {
 		}
 	});
 
+	// submit button
+	const submitButton = document.querySelector(".submit-button");
+	submitButton.addEventListener("click", function () {
+		const playerOneName = document.getElementById("player-one-name").value;
+		const playerTwoName = document.getElementById("player-two-name").value;
+		console.log(playerOneName, playerTwoName);
+		game.addPlayerNames(playerOneName, playerTwoName);
+	});
+
 	const gameDescription = document.querySelector(".game-description");
+
+	// restart game button
 	const restartButton = document.querySelector(".restart-button");
 	restartButton.addEventListener("click", function () {
 		topLeft.innerHTML = "";
@@ -252,4 +282,4 @@ const displayController = (function () {
 	});
 })();
 
-displayController();
+displayController;
