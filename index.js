@@ -9,7 +9,17 @@ const gameboard = (function () {
 		console.log("board", board);
 		return board;
 	};
-	return { displayBoard };
+
+	const clearBoard = () => {
+		board = [
+			["", "", ""],
+			["", "", ""],
+			["", "", ""],
+		];
+		return;
+	};
+
+	return { displayBoard, clearBoard };
 })();
 
 const Player = function (name, symbol) {
@@ -82,7 +92,7 @@ const Game = function () {
 			board[2][1] != "" &&
 			board[2][2] != ""
 		) {
-			return "full";
+			return "Game board is full!";
 		}
 
 		// nobody wins yet
@@ -120,112 +130,114 @@ const Game = function () {
 		}
 
 		const result = checkGameOver();
-		const para = document.querySelector(".game-description");
+		const gameDescription = document.querySelector(".game-description");
 		if (result == player1.getSymbol()) {
-			para.innerHTML = player1.getName() + " wins!";
+			gameDescription.innerHTML = player1.getName() + " wins!";
 		} else if (result == player2.getSymbol()) {
-			para.innerHTML = player2.getName() + " wins!";
+			gameDescription.innerHTML = player2.getName() + " wins!";
 		} else {
-			para.innerHTML = result;
+			gameDescription.innerHTML = result;
 		}
 
 		return symbol;
 	}
-	return { checkGameOver, addMarker };
+
+	function restartGame() {
+		gameboard.clearBoard();
+	}
+	return { checkGameOver, addMarker, restartGame };
 };
 
 const displayController = (function () {
-	gameboard.displayBoard();
-	var counter = 0;
-
 	const game = new Game();
-
-	var positionX = null;
-	var positionY = null;
 	var symbol = "X";
 
+	// top tic tac toe elements
 	const topLeft = document.getElementById("top-left");
 	topLeft.addEventListener("click", function () {
-		positionX = 0;
-		positionY = 0;
-		symbol = game.addMarker(positionX, positionY);
+		symbol = game.addMarker(0, 0);
 		if (symbol != false) {
 			topLeft.innerHTML = symbol;
 		}
 	});
 	const topMiddle = document.getElementById("top-middle");
 	topMiddle.addEventListener("click", function () {
-		positionX = 0;
-		positionY = 1;
-		symbol = game.addMarker(positionX, positionY);
+		symbol = game.addMarker(0, 1);
 		if (symbol != false) {
 			topMiddle.innerHTML = symbol;
 		}
 	});
 	const topRight = document.getElementById("top-right");
 	topRight.addEventListener("click", function () {
-		positionX = 0;
-		positionY = 2;
-		symbol = game.addMarker(positionX, positionY);
+		symbol = game.addMarker(0, 2);
 		if (symbol != false) {
 			topRight.innerHTML = symbol;
 		}
 	});
 
+	// middle tic tac toe elements
 	const middleLeft = document.getElementById("middle-left");
 	middleLeft.addEventListener("click", function () {
-		positionX = 1;
-		positionY = 0;
-		symbol = game.addMarker(positionX, positionY);
+		symbol = game.addMarker(1, 0);
 		if (symbol != false) {
 			middleLeft.innerHTML = symbol;
 		}
 	});
 	const middleMiddle = document.getElementById("middle-middle");
 	middleMiddle.addEventListener("click", function () {
-		positionX = 1;
-		positionY = 1;
-		symbol = game.addMarker(positionX, positionY);
+		symbol = game.addMarker(1, 1);
 		if (symbol != false) {
 			middleMiddle.innerHTML = symbol;
 		}
 	});
 	const middleRight = document.getElementById("middle-right");
 	middleRight.addEventListener("click", function () {
-		positionX = 1;
-		positionY = 2;
-		symbol = game.addMarker(positionX, positionY);
+		symbol = game.addMarker(1, 2);
 		if (symbol != false) {
 			middleRight.innerHTML = symbol;
 		}
 	});
 
+	// bottom tic tac toe elements
 	const bottomLeft = document.getElementById("bottom-left");
 	bottomLeft.addEventListener("click", function () {
-		positionX = 2;
-		positionY = 0;
-		symbol = game.addMarker(positionX, positionY);
+		symbol = game.addMarker(2, 0);
 		if (symbol != false) {
 			bottomLeft.innerHTML = symbol;
 		}
 	});
 	const bottomMiddle = document.getElementById("bottom-middle");
 	bottomMiddle.addEventListener("click", function () {
-		positionX = 2;
-		positionY = 1;
-		symbol = game.addMarker(positionX, positionY);
+		symbol = game.addMarker(2, 1);
 		if (symbol != false) {
 			bottomMiddle.innerHTML = symbol;
 		}
 	});
 	const bottomRight = document.getElementById("bottom-right");
 	bottomRight.addEventListener("click", function () {
-		positionX = 2;
-		positionY = 2;
-		symbol = game.addMarker(positionX, positionY);
+		symbol = game.addMarker(2, 2);
 		if (symbol != false) {
 			bottomRight.innerHTML = symbol;
 		}
+	});
+
+	const gameDescription = document.querySelector(".game-description");
+	const restartButton = document.querySelector(".restart-button");
+	restartButton.addEventListener("click", function () {
+		topLeft.innerHTML = "";
+		topMiddle.innerHTML = "";
+		topRight.innerHTML = "";
+
+		middleLeft.innerHTML = "";
+		middleMiddle.innerHTML = "";
+		middleRight.innerHTML = "";
+
+		bottomLeft.innerHTML = "";
+		bottomMiddle.innerHTML = "";
+		bottomRight.innerHTML = "";
+
+		gameDescription.innerHTML = "";
+		game.restartGame();
 	});
 })();
 
