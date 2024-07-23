@@ -1,4 +1,4 @@
-3 Project: Tic Tac Toe
+# Project: Tic Tac Toe
 A simple Tic Tac Toe project which takes in 2 nmaes and determine the winner after the Tic Tac Toe game.
 
 - Allows the user to enter their names or use the default names (Player 1 and Player 2).
