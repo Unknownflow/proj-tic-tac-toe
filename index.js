@@ -6,7 +6,6 @@ const gameboard = (function () {
 	];
 
 	const displayBoard = () => {
-		console.log("board", board);
 		return board;
 	};
 
@@ -39,8 +38,8 @@ const Player = function (name, symbol) {
 };
 
 const Game = function () {
-	const player1 = new Player("", "X");
-	const player2 = new Player("", "O");
+	const player1 = new Player("Player 1", "X");
+	const player2 = new Player("Player 2", "O");
 
 	// display player turn
 	const playerTurn = document.querySelector(".player-turn");
@@ -135,7 +134,6 @@ const Game = function () {
 		if (numMarkers % 2 == 0) {
 			symbol = player1.getSymbol();
 			const playerTwoName = player2.getName();
-			console.log("p2", playerTwoName);
 			if (playerTwoName != "") {
 				playerTurn.innerHTML = player2.getName() + "'s turn";
 			}
@@ -150,7 +148,6 @@ const Game = function () {
 		if (board[positionX][positionY] != "") {
 			return false;
 		} else {
-			console.log("a");
 			board[positionX][positionY] = symbol;
 		}
 
@@ -170,9 +167,8 @@ const Game = function () {
 	function restartGame() {
 		// display player turn
 		const playerTurn = document.querySelector(".player-turn");
-		if (player1.getName() != "") {
-			playerTurn.innerHTML = player1.getName() + "'s turn";
-		}
+		playerTurn.innerHTML = player1.getName() + "'s turn";
+
 		gameboard.clearBoard();
 	}
 	return { checkGameOver, addMarker, restartGame, addPlayerNames };
@@ -256,7 +252,11 @@ const displayController = (function () {
 	submitButton.addEventListener("click", function () {
 		const playerOneName = document.getElementById("player-one-name").value;
 		const playerTwoName = document.getElementById("player-two-name").value;
-		console.log(playerOneName, playerTwoName);
+
+		// display player turn
+		const playerTurn = document.querySelector(".player-turn");
+		playerTurn.innerHTML = playerOneName + "'s turn";
+
 		game.addPlayerNames(playerOneName, playerTwoName);
 	});
 
