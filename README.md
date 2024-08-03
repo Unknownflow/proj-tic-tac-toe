@@ -5,3 +5,11 @@ A simple Tic Tac Toe project which takes in 2 nmaes and determine the winner aft
 - After each move, determine whether there is a winner. If there is a winner, return the name of the winner.
 - If there is no winner after all the moves, return that there is no winner.
 - Checks all possible win conditions before returning the winner of the Tic Tac Toe game.
+
+## 💻 Technologies used
+
+<ul>
+  <li>Javascript</li>
+  <li>HTML</li>
+  <li>CSS</li>
+</ul>
